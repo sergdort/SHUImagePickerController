@@ -1,7 +1,11 @@
-pod "SHUImagePickerController", :path => "../"
+#!ruby
 
-target "Demo" do
-end
+platform :ios, '7.0'
 
-target "DemoTests" do
-end
+#Before push use:
+#pod "SHUImagePickerController"
+
+#For local development use:
+pod "SHUImagePickerController", :path => "../SHUImagePickerController.podspec"
+
+link_with ['SHUImagePickerControllerExample', 'SHUImagePickerControllerExampleTests']

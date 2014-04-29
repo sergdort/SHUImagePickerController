@@ -1,0 +1,14 @@
+PODS:
+  - SHUImagePickerController (0.1.0)
+
+DEPENDENCIES:
+  - SHUImagePickerController (from `../SHUImagePickerController.podspec`)
+
+EXTERNAL SOURCES:
+  SHUImagePickerController:
+    :path: ../SHUImagePickerController.podspec
+
+SPEC CHECKSUMS:
+  SHUImagePickerController: 0ae283c88274efdaa47a2f61277cf6a41d2f8f9f
+
+COCOAPODS: 0.32.1
