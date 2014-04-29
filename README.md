@@ -18,7 +18,7 @@ it simply add the following line to your Podfile:
 
 ## Author
 
-Sergey Shulga, sergey.shulga@softheme.com
+Sergey Shulga, sergdor@gmail.com
 
 ## License
 
