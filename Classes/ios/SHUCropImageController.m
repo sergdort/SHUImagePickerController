@@ -7,6 +7,7 @@
 //
 
 #import "SHUCropImageController.h"
+#import "SHUCropView.h"
 
 @interface SHUCropImageController ()
 
@@ -15,9 +16,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contectViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView             *contentView;
-@property (weak, nonatomic) IBOutlet UIView             *cropView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cropViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cropViewWidthConstraint;
 
 @property (strong, nonatomic)        UIImage            *imageToCrop;
 @property (assign, nonatomic)        CGSize              cropSize;
@@ -42,60 +40,62 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
-    
-    [self configView];
+    [self _configView];
 }
 
 - (void) viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    
-    CGSize imageSize = [self sizeOfImage:self.imageToCrop];
-    
-    CGFloat cropViewHeight = self.cropView.frame.size.height;
-    
-    CGFloat topInset, bottomInset, leftInset, rightInset;
-    
-    if (cropViewHeight > imageSize.height) {
-        topInset = (cropViewHeight - imageSize.height) / 2.f + 64.f;
-        bottomInset = (cropViewHeight - imageSize.height) / 2.f;
-        leftInset = self.cropView.frame.origin.x - (self.imageView.frame.size.width - imageSize.width) / 2.f;
-        rightInset = leftInset;
-    }else{
-        topInset = (imageSize.height - cropViewHeight) / 2.f + 64.f;
-        bottomInset = (imageSize.height - cropViewHeight) / 2.f;
-        leftInset = self.cropView.frame.origin.x - (self.imageView.frame.size.width - imageSize.width) / 2.f;
-        rightInset = leftInset;
-    }
-    
-    self.scrollView.contentInset = UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset);
+    [self _configScrollViewInsets];
 }
 
 #pragma mark - Private
 
-- (void) configView{
+- (void) _configView{
     self.imageView.image = self.imageToCrop;
-    self.cropView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.cropView.layer.borderWidth = 0.5f;
-    self.contentViewHeightConstraint.constant -= 64;
-    self.cropViewWidthConstraint.constant = self.cropSize.width;
-    self.cropViewHeightConstraint.constant = self.cropSize.height;
+    CGSize imageSize = [self _sizeOfImage:self.imageToCrop];
+    self.contectViewWidthConstraint.constant = imageSize.width;
+    self.contentViewHeightConstraint.constant = imageSize.height;
+    SHUCropView *cropView = [[SHUCropView alloc] initWithFrame:[self.view bounds] cropSize:self.cropSize];
+    [self.view addSubview:cropView];
 }
 
-- (CGSize ) sizeOfImage:(UIImage *)image{
+- (void) _configScrollViewInsets {
+    
+    CGFloat cropViewHeight = self.cropSize.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    
+    CGFloat topInset, bottomInset, leftInset, rightInset;
+
+    topInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f + (navigationBarHeight + statusBarHeight) / 2.f;
+    bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (navigationBarHeight + statusBarHeight) / 2.f;
+    leftInset = (self.scrollView.frame.size.width - self.cropSize.width) / 2.f;
+    rightInset = leftInset;
+  
+    self.scrollView.contentInset = UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset);
+}
+
+- (CGSize ) _sizeOfImage:(UIImage *)image{
     
     CGSize actualSize = image.size;
     CGFloat width, height;
     
-    if (actualSize.width > actualSize.height) {
-        width = self.imageView.frame.size.width;
+    if (actualSize.width < self.view.frame.size.width) {
+        width = self.view.frame.size.width;
         height = actualSize.height * width / actualSize.width;
     
     }else{
-        height = self.imageView.frame.size.height;
-        width = actualSize.width * height / actualSize.height;
+        height = actualSize.height;
+        width = actualSize.width;
     }
     
-    return CGSizeMake(width, height);
+    if (height < self.view.frame.size.height) {
+        width = width * self.view.frame.size.height / height;
+        height = self.view.frame.size.height;
+    }
+    
+    return CGSizeMake(ceilf(width), ceilf(height));
 }
+
 
 @end

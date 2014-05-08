@@ -9,9 +9,6 @@
                 <outlet property="contectViewWidthConstraint" destination="uEf-NG-QJY" id="seC-jf-a0c"/>
                 <outlet property="contentView" destination="Xhl-th-gK7" id="rHt-32-nNd"/>
                 <outlet property="contentViewHeightConstraint" destination="J8L-x3-KtE" id="YcT-Yk-WZR"/>
-                <outlet property="cropView" destination="8AQ-J7-BGK" id="BAz-0o-LZY"/>
-                <outlet property="cropViewHeightConstraint" destination="0kL-Kk-O66" id="yMH-bZ-2Mo"/>
-                <outlet property="cropViewWidthConstraint" destination="obY-Gu-nS7" id="9uJ-LQ-i1u"/>
                 <outlet property="imageView" destination="H2n-uM-yJm" id="Cxa-mm-Zic"/>
                 <outlet property="scrollView" destination="eFl-5c-tBf" id="Z77-6Z-hNp"/>
                 <outlet property="view" destination="iN0-l3-epB" id="A9V-Zz-qVp"/>
@@ -22,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFl-5c-tBf">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="20" translatesAutoresizingMaskIntoConstraints="NO" id="eFl-5c-tBf">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
@@ -58,22 +55,11 @@
                         <outlet property="delegate" destination="-1" id="4sJ-1p-rj5"/>
                     </connections>
                 </scrollView>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AQ-J7-BGK">
-                    <rect key="frame" x="0.0" y="211" width="320" height="211"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="211" id="0kL-Kk-O66"/>
-                        <constraint firstAttribute="width" constant="320" id="obY-Gu-nS7"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" red="0.82352948189999997" green="0.82745105029999999" blue="0.83137261870000001" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="eFl-5c-tBf" secondAttribute="bottom" id="Hk0-nS-gO2"/>
                 <constraint firstItem="eFl-5c-tBf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OdY-Gt-eR2"/>
-                <constraint firstAttribute="centerY" secondItem="8AQ-J7-BGK" secondAttribute="centerY" constant="-32" id="Wfa-1E-omm"/>
-                <constraint firstAttribute="centerX" secondItem="8AQ-J7-BGK" secondAttribute="centerX" id="h9b-cL-OjE"/>
                 <constraint firstAttribute="trailing" secondItem="eFl-5c-tBf" secondAttribute="trailing" id="nJw-gQ-DYy"/>
                 <constraint firstItem="eFl-5c-tBf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tbF-Pk-waU"/>
             </constraints>
