@@ -82,11 +82,11 @@ typedef NS_ENUM(NSInteger, SHUCropViewEdgeType) {
     
     CGPoint origin;
     CGSize  size;
-    origin = CGPointMake(self.center.x - self.cropSize.width / 2.f,
-                         self.center.y + 32.f - self.cropSize.height / 2.f);
+    origin = CGPointMake(self.center.x - self.cropSize.width / 2.f + 1.f,
+                         self.center.y + 32.f - self.cropSize.height / 2.f + 1.f);
     size = self.cropSize;
     
-    return CGRectMake(origin.x , origin.y, size.width, size.height);
+    return CGRectMake(origin.x , origin.y, size.width - 1.f, size.height - 1.f);
 }
 
 - (CGRect ) _rectForEdgeType:(SHUCropViewEdgeType )edgeType{
@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, SHUCropViewEdgeType) {
             break;
         case SHUCropViewEdgeTypeBottom:
             origin = CGPointMake(centerRect.origin.x,
-                                 centerRect.origin.y + centerRect.size.height);
+                                 centerRect.origin.y + centerRect.size.height + 1.f);
             size = CGSizeMake(centerRect.size.width,
                               self.frame.size.height - origin.y);
             break;
@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, SHUCropViewEdgeType) {
             origin = CGPointMake(centerRect.origin.x,
                                  self.bounds.origin.y);
             size = CGSizeMake(centerRect.size.width,
-                              self.frame.size.height - centerRect.origin.y - 36.f);
+                              centerRect.origin.y);
             break;
         default:
             break;

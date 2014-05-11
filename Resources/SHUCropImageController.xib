@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHUCropImageController">
             <connections>
+                <outlet property="activityIndicator" destination="Loy-XP-y37" id="xes-uj-Gl5"/>
                 <outlet property="contectViewWidthConstraint" destination="uEf-NG-QJY" id="seC-jf-a0c"/>
                 <outlet property="contentView" destination="Xhl-th-gK7" id="rHt-32-nNd"/>
                 <outlet property="contentViewHeightConstraint" destination="J8L-x3-KtE" id="YcT-Yk-WZR"/>
@@ -55,12 +56,18 @@
                         <outlet property="delegate" destination="-1" id="4sJ-1p-rj5"/>
                     </connections>
                 </scrollView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Loy-XP-y37">
+                    <rect key="frame" x="141" y="266" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="eFl-5c-tBf" secondAttribute="bottom" id="Hk0-nS-gO2"/>
                 <constraint firstItem="eFl-5c-tBf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OdY-Gt-eR2"/>
+                <constraint firstAttribute="centerX" secondItem="Loy-XP-y37" secondAttribute="centerX" constant="0.5" id="cl3-Qt-HHp"/>
                 <constraint firstAttribute="trailing" secondItem="eFl-5c-tBf" secondAttribute="trailing" id="nJw-gQ-DYy"/>
+                <constraint firstAttribute="centerY" secondItem="Loy-XP-y37" secondAttribute="centerY" constant="-0.5" id="nVr-wD-YHI"/>
                 <constraint firstItem="eFl-5c-tBf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tbF-Pk-waU"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

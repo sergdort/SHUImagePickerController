@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SHUCropImageControllerDelegate <NSObject>
+
+- (void) cropViewControllerDidCropImage:(UIImage *)cropedImage;
+
+@end
+
 @interface SHUCropImageController : UIViewController
 
-- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil imageToCrop:(UIImage *)image cropSize:(CGSize )cropSize;
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil imageToCrop:(UIImage *)image cropSize:(CGSize )cropSize delegate:(id <SHUCropImageControllerDelegate> )delegate;
 
 @end

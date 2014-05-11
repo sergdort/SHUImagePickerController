@@ -10,8 +10,8 @@
 
 @interface SHUImagePicker : NSObject
 
-- (instancetype) initWithTargetViewController:(UIViewController *)targetViewController cropSize:(CGSize )cropSize;
+- (instancetype) initWithTargetViewController:(UIViewController *)targetViewController;
 
-- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType WithCallback:(void (^)(UIImage *))callback;
+- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize withCallback:(void (^)(UIImage *))callback;
 
 @end

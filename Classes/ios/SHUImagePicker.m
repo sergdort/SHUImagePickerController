@@ -9,7 +9,7 @@
 #import "SHUImagePicker.h"
 #import "SHUCropImageController.h"
 
-@interface SHUImagePicker () <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface SHUImagePicker () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHUCropImageControllerDelegate> {
 
 @private
     CGSize                             _cropSize;
@@ -25,13 +25,12 @@
 
 @implementation SHUImagePicker
 
-- (instancetype) initWithTargetViewController:(UIViewController *)targetViewController cropSize:(CGSize )cropSize{
+- (instancetype) initWithTargetViewController:(UIViewController *)targetViewController{
     
     self = [super init];
     
     if (self) {
         _targetViewController = targetViewController;
-        _cropSize = cropSize;
         _imagePickerController = [[UIImagePickerController alloc] init];
         _imagePickerController.delegate = self;
     }
@@ -39,9 +38,10 @@
     return self;
 }
 
-- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType WithCallback:(void (^)(UIImage *))callback{
+- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize withCallback:(void (^)(UIImage *))callback{
     self.callbackBlock = callback;
     _sourceType = sourceType;
+    _cropSize = cropSize;
     _imagePickerController.sourceType = _sourceType;
     [_targetViewController presentViewController:_imagePickerController animated:YES completion:nil];
 }
@@ -50,8 +50,16 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     _imageToCrop = info[UIImagePickerControllerOriginalImage];
-    SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:_imageToCrop cropSize:CGSizeMake(250, 100)];
+    SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:_imageToCrop cropSize:_cropSize delegate:self];
     [picker pushViewController:cropViewController animated:YES];
 }
+
+#pragma mark - SHUCropImageControllerDelegate
+
+- (void) cropViewControllerDidCropImage:(UIImage *)cropedImage{
+    self.callbackBlock(cropedImage);
+    [_targetViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

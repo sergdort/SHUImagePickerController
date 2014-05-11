@@ -12,6 +12,7 @@
 @interface SHUViewController ()
 
 @property (strong, nonatomic) SHUImagePicker *imagePicker;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
@@ -20,7 +21,12 @@
 
 - (IBAction)buttonPressed:(id)sender {
     self.imagePicker = [[SHUImagePicker alloc] initWithTargetViewController:self cropSize:CGSizeZero];
-    [self.imagePicker showPickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary WithCallback:nil];
+    
+    __weak SHUViewController *weakSelf = self;
+    [self.imagePicker showPickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary cropSize:CGSizeMake(250.f, 250.f) withCallback:^(UIImage *cropedImage) {
+        SHUViewController *strongSelf = weakSelf;
+        strongSelf.imageView.image = cropedImage;
+    }];
 }
 
 @end

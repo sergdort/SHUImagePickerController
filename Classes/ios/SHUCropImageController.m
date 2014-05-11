@@ -19,6 +19,9 @@
 
 @property (strong, nonatomic)          UIImage            *imageToCrop;
 @property (assign, nonatomic)          CGSize              cropSize;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+@property (weak, nonatomic)   id<SHUCropImageControllerDelegate> delegate;
 
 @end
 
@@ -26,13 +29,14 @@
 
 #pragma mark - UIViewController
 
-- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil imageToCrop:(UIImage *)image cropSize:(CGSize)cropSize{
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil imageToCrop:(UIImage *)image cropSize:(CGSize )cropSize delegate:(id <SHUCropImageControllerDelegate> )delegate{
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
         self.imageToCrop = image;
         self.cropSize = cropSize;
+        self.delegate = delegate;
     }
     
     return self;
@@ -40,6 +44,7 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     [self _configView];
     [self _configScrollViewZoom];
 }
@@ -55,7 +60,7 @@
 
 - (void) _configView{
     self.imageView.image = self.imageToCrop;
-    CGSize imageSize = [self _sizeOfImage:self.imageToCrop];
+    CGSize imageSize = [self _contentSizeForImage:self.imageToCrop];
     self.contectViewWidthConstraint.constant = imageSize.width;
     self.contentViewHeightConstraint.constant = imageSize.height;
     SHUCropView *cropView = [[SHUCropView alloc] initWithFrame:[self.view bounds] cropSize:self.cropSize];
@@ -68,7 +73,8 @@
     }else{
         self.scrollView.minimumZoomScale =  self.cropSize.height / self.contectViewWidthConstraint.constant;
     }
-    self.scrollView.maximumZoomScale = 20.f;
+    CGFloat maxZoomFactor = MAX(self.imageToCrop.size.width, self.imageToCrop.size.height) / MAX(self.cropSize.width, self.cropSize.height);
+    self.scrollView.maximumZoomScale = maxZoomFactor < 2 ? 10.f : maxZoomFactor;
 }
 
 - (void) _configScrollViewInsets {
@@ -87,7 +93,20 @@
     self.scrollView.contentInset = UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset);
 }
 
-- (CGSize) _sizeOfImage:(UIImage *)image{
+- (void) _cropImage{
+    [self.activityIndicator startAnimating];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CGImageRef cropedImageRef = CGImageCreateWithImageInRect(self.imageToCrop.CGImage,
+                                                                 [self _cropRect]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.activityIndicator stopAnimating];
+            [self.delegate cropViewControllerDidCropImage:[[UIImage alloc] initWithCGImage:cropedImageRef]];
+            CGImageRelease(cropedImageRef);
+        });
+    });
+}
+
+- (CGSize) _contentSizeForImage:(UIImage *)image{
     
     CGSize actualSize = image.size;
     CGFloat width, height;
@@ -96,7 +115,8 @@
         width = self.cropSize.width;
         height = actualSize.height * width / actualSize.width;
         
-    }else{
+    }
+    else{
         height = actualSize.height;
         width = actualSize.width;
     }
@@ -106,6 +126,25 @@
         height = self.cropSize.height;
     }
     return CGSizeMake(ceilf(width), ceilf(height));
+}
+
+- (CGRect) _cropRect{
+    CGFloat scaleFactor = self.imageToCrop.size.width / [self _contentSizeForImage:self.imageToCrop].width;
+    CGFloat zoomFactor = self.scrollView.zoomScale;
+    CGFloat x = fabs(self.scrollView.contentOffset.x + self.scrollView.contentInset.left) * scaleFactor;
+    CGFloat y = fabs(self.scrollView.contentOffset.y + self.scrollView.contentInset.top) * scaleFactor;
+    
+    return CGRectMake(x / zoomFactor, y / zoomFactor,
+                      self.cropSize.width * scaleFactor / zoomFactor,
+                      self.cropSize.height * scaleFactor / zoomFactor);
+}
+
+
+#pragma mark - Button actions
+
+- (void) doneButtonPressed:(id)sender{
+    [self _cropImage];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
