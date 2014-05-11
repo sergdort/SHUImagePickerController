@@ -20,6 +20,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*.{h,m}'
   s.resources = 'Resources/*'
 
-  s.frameworks = 'CoreGraphics', 'UIKit'
+  s.frameworks = 'CoreGraphics', 'UIKit', 'AssetsLibrary'
 
 end

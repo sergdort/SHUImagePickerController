@@ -6,6 +6,7 @@
 //
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "SHUImagePicker.h"
 #import "SHUCropImageController.h"
 
@@ -26,6 +27,8 @@
 @end
 
 @implementation SHUImagePicker
+
+#pragma mark - Public
 
 - (instancetype) initWithTargetViewController:(UIViewController *)targetViewController{
     
@@ -55,12 +58,35 @@
     }
 }
 
+
+#pragma mark - Private
+
+- (void) _performDrillInWithPhotoUrl:(NSURL *)photoUrl pickerController:(UIImagePickerController *)picker {
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:photoUrl resultBlock:^(ALAsset *asset) {
+        
+        ALAssetRepresentation *representation = [asset defaultRepresentation];
+        _imageToCrop = [UIImage imageWithCGImage:[representation fullScreenImage]
+                                          scale:[representation scale]
+                                    orientation:UIImageOrientationUp];
+        
+        SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:_imageToCrop cropSize:_cropSize delegate:self];
+        [picker pushViewController:cropViewController animated:YES];
+        
+    } failureBlock:^(NSError *error) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles: nil];
+        [alertView show];
+        
+    }];
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    _imageToCrop = info[UIImagePickerControllerOriginalImage];
-    SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:_imageToCrop cropSize:_cropSize delegate:self];
-    [picker pushViewController:cropViewController animated:YES];
+    NSURL *imageUrl = info[UIImagePickerControllerReferenceURL];
+    [self _performDrillInWithPhotoUrl:imageUrl pickerController:picker];
 }
 
 #pragma mark - SHUCropImageControllerDelegate

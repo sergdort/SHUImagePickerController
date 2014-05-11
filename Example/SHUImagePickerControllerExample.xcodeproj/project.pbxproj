@@ -58,6 +58,7 @@
 		2142E797190D8D5000C38968 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2142E799190D8D5000C38968 /* SHUImagePickerControllerExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHUImagePickerControllerExampleTests.m; sourceTree = "<group>"; };
 		21C310F9191F7883006135C2 /* Main-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-iPad.storyboard"; sourceTree = "<group>"; };
+		21C310FB191FD5DF006135C2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		356A4927FD0A4980B8A7FA66 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -110,6 +111,7 @@
 		2142E76D190D8D4F00C38968 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21C310FB191FD5DF006135C2 /* AssetsLibrary.framework */,
 				2142E76E190D8D4F00C38968 /* Foundation.framework */,
 				2142E770190D8D4F00C38968 /* CoreGraphics.framework */,
 				2142E772190D8D4F00C38968 /* UIKit.framework */,

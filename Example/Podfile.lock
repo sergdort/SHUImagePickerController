@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../SHUImagePickerController.podspec
 
 SPEC CHECKSUMS:
-  SHUImagePickerController: 0ae283c88274efdaa47a2f61277cf6a41d2f8f9f
+  SHUImagePickerController: f3a6118e6a750acea7974d79b0dec561deb8336b
 
 COCOAPODS: 0.32.1

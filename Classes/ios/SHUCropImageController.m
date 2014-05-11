@@ -59,6 +59,7 @@
 #pragma mark - Private
 
 - (void) _configView{
+    self.activityIndicator.hidden = YES;
     self.imageView.image = self.imageToCrop;
     CGSize imageSize = [self _contentSizeForImage:self.imageToCrop];
     self.contectViewWidthConstraint.constant = imageSize.width;
@@ -94,12 +95,14 @@
 }
 
 - (void) _cropImage{
+    self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CGImageRef cropedImageRef = CGImageCreateWithImageInRect(self.imageToCrop.CGImage,
                                                                  [self _cropRect]);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.activityIndicator stopAnimating];
+            self.activityIndicator.hidden = YES;
             [self.delegate cropViewControllerDidCropImage:[[UIImage alloc] initWithCGImage:cropedImageRef]];
             CGImageRelease(cropedImageRef);
         });
