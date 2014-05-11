@@ -7,19 +7,11 @@
 Pod::Spec.new do |s|
   s.name             = "SHUImagePickerController"
   s.version          = "0.1.0"
-  s.summary          = "A short description of SHUImagePickerController."
-  s.description      = <<-DESC
-                       An optional longer description of SHUImagePickerController
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
-  s.homepage         = "http://EXAMPLE/NAME"
-  s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.summary          = "image picker for iOS with crop area"
+  s.homepage         = "https://github.com/sergdort/SHUImagePickerController"
   s.license          = 'MIT'
-  s.author           = { "Sergey Shulga" => "sergey.shulga@softheme.com" }
-  s.source           = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/EXAMPLE'
+  s.author           = { "Sergey Shulga" => "sergdort@gmail.com" }
+  s.source           = { :git => "https://github.com/sergdort/SHUImagePickerController.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.ios.deployment_target = '7.0'

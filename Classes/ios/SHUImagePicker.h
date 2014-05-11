@@ -12,6 +12,6 @@
 
 - (instancetype) initWithTargetViewController:(UIViewController *)targetViewController;
 
-- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize withCallback:(void (^)(UIImage *))callback;
+- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize fromRect:(CGRect )rect withCallback:(void (^)(UIImage *))callback;
 
 @end

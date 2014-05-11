@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, SHUCropViewEdgeType) {
     CGPoint origin;
     CGSize  size;
     origin = CGPointMake(self.center.x - self.cropSize.width / 2.f + 1.f,
-                         self.center.y + 32.f - self.cropSize.height / 2.f + 1.f);
+                         self.center.y - self.cropSize.height / 2.f + 1.f);
     size = self.cropSize;
     
     return CGRectMake(origin.x , origin.y, size.width - 1.f, size.height - 1.f);

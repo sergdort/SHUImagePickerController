@@ -19,6 +19,8 @@
     UIImage                           *_imageToCrop;
 }
 
+@property (nonatomic, strong) UIPopoverController *popoverController;
+
 @property (copy, nonatomic)   void(^callbackBlock)(UIImage *cropedImage);
 
 @end
@@ -38,12 +40,19 @@
     return self;
 }
 
-- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize withCallback:(void (^)(UIImage *))callback{
+- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize fromRect:(CGRect)rect withCallback:(void (^)(UIImage *))callback{
     self.callbackBlock = callback;
     _sourceType = sourceType;
     _cropSize = cropSize;
     _imagePickerController.sourceType = _sourceType;
-    [_targetViewController presentViewController:_imagePickerController animated:YES completion:nil];
+    
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
+        [self.popoverController presentPopoverFromRect:rect inView:_targetViewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }else{
+        [_targetViewController presentViewController:_imagePickerController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate

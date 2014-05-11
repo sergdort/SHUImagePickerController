@@ -45,13 +45,13 @@
 - (void) viewDidLoad{
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
-    [self _configView];
     [self _configScrollViewZoom];
 }
 
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    [self _configView];
     [self _configScrollViewInsets];
 }
 
@@ -78,15 +78,23 @@
 }
 
 - (void) _configScrollViewInsets {
-    
+    BOOL isIPad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     CGFloat cropViewHeight = self.cropSize.height;
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     
     CGFloat topInset, bottomInset, leftInset, rightInset;
-
-    topInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (navigationBarHeight + statusBarHeight) / 2.f;
-    bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (navigationBarHeight + statusBarHeight) / 2.f;
+    
+    if (isIPad) {
+        bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (568.f - self.view.frame.size.height) / 2.f;
+        
+        topInset = bottomInset;
+    }else{
+        bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (568.f - self.view.frame.size.height) / 2.f;
+        
+        topInset = bottomInset - (navigationBarHeight + statusBarHeight);
+    }
+    
     leftInset = (self.scrollView.frame.size.width - self.cropSize.width) / 2.f;
     rightInset = leftInset;
   
