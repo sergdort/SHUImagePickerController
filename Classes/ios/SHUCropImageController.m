@@ -85,17 +85,9 @@
     
     CGFloat topInset, bottomInset, leftInset, rightInset;
     
-    if (isIPad) {
-        bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (568.f - self.view.frame.size.height) / 2.f;
-        
-        topInset = bottomInset;
-    }else{
-        bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (568.f - self.view.frame.size.height) / 2.f;
-        
-        topInset = bottomInset - (navigationBarHeight + statusBarHeight);
-    }
-    
-    leftInset = (self.scrollView.frame.size.width - self.cropSize.width) / 2.f;
+    bottomInset = (self.contentView.frame.size.height - cropViewHeight) / 2.f - (568.f - self.view.frame.size.height) / 2.f ;
+    topInset = isIPad ? bottomInset : bottomInset - (navigationBarHeight + statusBarHeight);
+    leftInset = (self.scrollView.frame.size.width - self.cropSize.width) / 2.f - (320.f - self.view.frame.size.width) / 2.f;
     rightInset = leftInset;
   
     self.scrollView.contentInset = UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset);
