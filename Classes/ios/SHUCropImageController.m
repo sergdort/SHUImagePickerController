@@ -45,13 +45,13 @@
 - (void) viewDidLoad{
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
-    [self _configScrollViewZoom];
 }
 
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     [self _configView];
+    [self _configScrollViewZoom];
     [self _configScrollViewInsets];
 }
 

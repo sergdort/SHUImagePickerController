@@ -49,7 +49,6 @@
     _cropSize = cropSize;
     _imagePickerController.sourceType = _sourceType;
     
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
         [self.popoverController presentPopoverFromRect:rect inView:_targetViewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
