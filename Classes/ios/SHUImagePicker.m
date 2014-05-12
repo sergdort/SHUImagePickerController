@@ -66,7 +66,7 @@
     [library assetForURL:photoUrl resultBlock:^(ALAsset *asset) {
         
         ALAssetRepresentation *representation = [asset defaultRepresentation];
-        _imageToCrop = [UIImage imageWithCGImage:[representation fullScreenImage]
+        _imageToCrop = [UIImage imageWithCGImage:[representation fullResolutionImage]
                                           scale:[representation scale]
                                     orientation:UIImageOrientationUp];
         
