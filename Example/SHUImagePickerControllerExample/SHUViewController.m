@@ -20,10 +20,12 @@
 
 
 - (IBAction)buttonPressed:(id)sender {
-    self.imagePicker = [[SHUImagePicker alloc] initWithTargetViewController:self];
+    self.imagePicker = [[SHUImagePicker alloc] init];
     
     __weak SHUViewController *weakSelf = self;
-    [self.imagePicker showPickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary cropSize:CGSizeMake(250.f, 250.f) fromRect:[sender frame] withCallback:^(UIImage *cropedImage) {
+    [self.imagePicker showPickerInViewController:self
+                                   forSourceType:UIImagePickerControllerSourceTypePhotoLibrary cropSize:CGSizeMake(250.f, 250.f)
+                                       fromRect:[sender frame] withCallback:^(UIImage *cropedImage) {
         SHUViewController *strongSelf = weakSelf;
         strongSelf.imageView.image = cropedImage;
     }];

@@ -10,19 +10,14 @@
 #import "SHUImagePicker.h"
 #import "SHUCropImageController.h"
 
-@interface SHUImagePicker () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHUCropImageControllerDelegate> {
+@interface SHUImagePicker () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHUCropImageControllerDelegate>
 
-@private
-    CGSize                             _cropSize;
-    UIImagePickerControllerSourceType  _sourceType;
-    UIViewController                  *_targetViewController;
-    UIImagePickerController           *_imagePickerController;
-    UIImage                           *_imageToCrop;
-}
+@property (strong, nonatomic)   UIImagePickerController *imagePickerController;
+@property (weak,   nonatomic)   UIViewController        *targetViewController;
+@property (strong, nonatomic)   UIPopoverController     *popoverController;
+@property (assign, nonatomic)   CGSize                   cropSize;
 
-@property (nonatomic, strong) UIPopoverController *popoverController;
-
-@property (copy, nonatomic)   void(^callbackBlock)(UIImage *cropedImage);
+@property (copy,   nonatomic)   void(^callbackBlock)(UIImage *cropedImage);
 
 @end
 
@@ -30,30 +25,20 @@
 
 #pragma mark - Public
 
-- (instancetype) initWithTargetViewController:(UIViewController *)targetViewController{
+- (void) showPickerInViewController:(UIViewController *)viewController forSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize fromRect:(CGRect)rect withCallback:(void (^)(UIImage *))callback{
     
-    self = [super init];
-    
-    if (self) {
-        _targetViewController = targetViewController;
-        _imagePickerController = [[UIImagePickerController alloc] init];
-        _imagePickerController.delegate = self;
-    }
-    
-    return self;
-}
-
-- (void) showPickerForSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize fromRect:(CGRect)rect withCallback:(void (^)(UIImage *))callback{
     self.callbackBlock = callback;
-    _sourceType = sourceType;
-    _cropSize = cropSize;
-    _imagePickerController.sourceType = _sourceType;
+    
+    self.imagePickerController = [[UIImagePickerController alloc] init];
+    self.imagePickerController.delegate = self;
+    self.imagePickerController.sourceType = sourceType;
+    self.cropSize = cropSize;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
-        [self.popoverController presentPopoverFromRect:rect inView:_targetViewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
+        [self.popoverController presentPopoverFromRect:rect inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }else{
-        [_targetViewController presentViewController:_imagePickerController animated:YES completion:nil];
+        [viewController presentViewController:self.imagePickerController animated:YES completion:nil];
     }
 }
 
@@ -66,11 +51,11 @@
     [library assetForURL:photoUrl resultBlock:^(ALAsset *asset) {
         
         ALAssetRepresentation *representation = [asset defaultRepresentation];
-        _imageToCrop = [UIImage imageWithCGImage:[representation fullResolutionImage]
+        UIImage *imageToCrop = [UIImage imageWithCGImage:[representation fullResolutionImage]
                                           scale:[representation scale]
                                     orientation:UIImageOrientationUp];
         
-        SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:_imageToCrop cropSize:_cropSize delegate:self];
+        SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:imageToCrop cropSize:_cropSize delegate:self];
         [picker pushViewController:cropViewController animated:YES];
         
     } failureBlock:^(NSError *error) {
@@ -91,8 +76,10 @@
 #pragma mark - SHUCropImageControllerDelegate
 
 - (void) cropViewControllerDidCropImage:(UIImage *)cropedImage{
-    self.callbackBlock(cropedImage);
-    [_targetViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    if (self.callbackBlock) {
+        self.callbackBlock(cropedImage);
+    }
+    [self.targetViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 
