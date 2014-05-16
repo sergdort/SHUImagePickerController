@@ -27,8 +27,8 @@
 
 - (void) showPickerInViewController:(UIViewController *)viewController forSourceType:(UIImagePickerControllerSourceType )sourceType cropSize:(CGSize)cropSize fromRect:(CGRect)rect withCallback:(void (^)(UIImage *))callback{
     
+    self.targetViewController = viewController;
     self.callbackBlock = callback;
-    
     self.imagePickerController = [[UIImagePickerController alloc] init];
     self.imagePickerController.delegate = self;
     self.imagePickerController.sourceType = sourceType;
@@ -36,9 +36,9 @@
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
-        [self.popoverController presentPopoverFromRect:rect inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.popoverController presentPopoverFromRect:rect inView:self.targetViewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }else{
-        [viewController presentViewController:self.imagePickerController animated:YES completion:nil];
+        [self.targetViewController presentViewController:self.imagePickerController animated:YES completion:nil];
     }
 }
 

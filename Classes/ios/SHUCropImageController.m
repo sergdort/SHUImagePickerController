@@ -69,11 +69,7 @@
 }
 
 - (void) _configScrollViewZoom{
-    if (self.cropSize.width > self.cropSize.height) {
-        self.scrollView.minimumZoomScale =  self.cropSize.width / self.contectViewWidthConstraint.constant;
-    }else{
-        self.scrollView.minimumZoomScale =  self.cropSize.height / self.contectViewWidthConstraint.constant;
-    }
+    self.scrollView.minimumZoomScale = 1.f;
     CGFloat maxZoomFactor = MAX(self.imageToCrop.size.width, self.imageToCrop.size.height) / MAX(self.cropSize.width, self.cropSize.height);
     self.scrollView.maximumZoomScale = maxZoomFactor < 2 ? 10.f : maxZoomFactor;
 }

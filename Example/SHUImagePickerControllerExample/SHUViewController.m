@@ -24,7 +24,7 @@
     
     __weak SHUViewController *weakSelf = self;
     [self.imagePicker showPickerInViewController:self
-                                   forSourceType:UIImagePickerControllerSourceTypePhotoLibrary cropSize:CGSizeMake(250.f, 250.f)
+                                   forSourceType:UIImagePickerControllerSourceTypePhotoLibrary cropSize:CGSizeMake(150.f, 150.f)
                                        fromRect:[sender frame] withCallback:^(UIImage *cropedImage) {
         SHUViewController *strongSelf = weakSelf;
         strongSelf.imageView.image = cropedImage;
