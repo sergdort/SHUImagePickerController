@@ -34,7 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
-        self.imageToCrop = image;
+        self.imageToCrop = [self _imageWithFixedOrientationFromImage:image];
         self.cropSize = cropSize;
         self.delegate = delegate;
     }
@@ -57,6 +57,88 @@
 
 
 #pragma mark - Private
+
+- (UIImage *) _imageWithFixedOrientationFromImage:(UIImage *)image {
+    if (!image || image.imageOrientation == UIImageOrientationUp) {
+        return image;
+    }
+
+    CGSize size = image.size;
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGContextRef context = CGBitmapContextCreate(NULL,
+                                                 size.width,
+                                                 size.height,
+                                                 CGImageGetBitsPerComponent(image.CGImage),
+                                                 0,
+                                                 CGImageGetColorSpace(image.CGImage),
+                                                 CGImageGetBitmapInfo(image.CGImage));
+
+    // Rotate the image if it's not UIImageOrientationUp
+    switch (image.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, size.width, size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+
+        default:
+            break;
+    }
+
+    // Flip mirrored orientations
+    switch (image.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+
+        default:
+            break;
+    }
+
+    CGContextConcatCTM(context, transform);
+    CGRect rect;
+
+    switch (image.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            rect = CGRectMake(0, 0, size.height, size.width);
+            break;
+        default:
+            rect = CGRectMake(0, 0, size.width, size.height);
+            break;
+    }
+
+    CGContextDrawImage(context, rect, image.CGImage);
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+
+    image = [UIImage imageWithCGImage:imageRef];
+    CGContextRelease(context);
+    CGImageRelease(imageRef);
+
+    return image;
+}
 
 - (void) _configView{
     self.activityIndicator.hidden = YES;
