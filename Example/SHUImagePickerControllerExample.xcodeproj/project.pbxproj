@@ -37,7 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		2142E76B190D8D4F00C38968 /* SHUImagePickerControllerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SHUImagePickerControllerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2142E76E190D8D4F00C38968 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2142E770190D8D4F00C38968 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,7 +58,9 @@
 		2142E799190D8D5000C38968 /* SHUImagePickerControllerExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHUImagePickerControllerExampleTests.m; sourceTree = "<group>"; };
 		21C310F9191F7883006135C2 /* Main-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-iPad.storyboard"; sourceTree = "<group>"; };
 		21C310FB191FD5DF006135C2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		284F18A714C9440AC25DA489 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		356A4927FD0A4980B8A7FA66 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		832EC4CFF11916A9E998B2EC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +96,7 @@
 				2142E793190D8D5000C38968 /* SHUImagePickerControllerExampleTests */,
 				2142E76D190D8D4F00C38968 /* Frameworks */,
 				2142E76C190D8D4F00C38968 /* Products */,
-				05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */,
+				741D2CCA879B92887851C457 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +172,15 @@
 			children = (
 			);
 			name = iPad;
+			sourceTree = "<group>";
+		};
+		741D2CCA879B92887851C457 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				284F18A714C9440AC25DA489 /* Pods.debug.xcconfig */,
+				832EC4CFF11916A9E998B2EC /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,7 +309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A44546BD4C2049DEB3246B8F /* Check Pods Manifest.lock */ = {
@@ -329,7 +339,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -463,14 +473,14 @@
 		};
 		2142E79E190D8D5000C38968 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */;
+			baseConfigurationReference = 284F18A714C9440AC25DA489 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SHUImagePickerControllerExample/SHUImagePickerControllerExample-Prefix.pch";
 				INFOPLIST_FILE = "SHUImagePickerControllerExample/SHUImagePickerControllerExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -479,14 +489,14 @@
 		};
 		2142E79F190D8D5000C38968 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */;
+			baseConfigurationReference = 832EC4CFF11916A9E998B2EC /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SHUImagePickerControllerExample/SHUImagePickerControllerExample-Prefix.pch";
 				INFOPLIST_FILE = "SHUImagePickerControllerExample/SHUImagePickerControllerExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -495,7 +505,7 @@
 		};
 		2142E7A1190D8D5000C38968 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */;
+			baseConfigurationReference = 284F18A714C9440AC25DA489 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SHUImagePickerControllerExample.app/SHUImagePickerControllerExample";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -518,7 +528,7 @@
 		};
 		2142E7A2190D8D5000C38968 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05418C6CF6D04DDFA6BC9A08 /* Pods.xcconfig */;
+			baseConfigurationReference = 832EC4CFF11916A9E998B2EC /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SHUImagePickerControllerExample.app/SHUImagePickerControllerExample";
 				FRAMEWORK_SEARCH_PATHS = (
