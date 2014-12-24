@@ -51,9 +51,11 @@
     [library assetForURL:photoUrl resultBlock:^(ALAsset *asset) {
         
         ALAssetRepresentation *representation = [asset defaultRepresentation];
+        NSNumber *orientationValue = [asset valueForProperty:ALAssetPropertyOrientation];
+        UIImageOrientation orientation = orientationValue ? [orientationValue integerValue] : UIImageOrientationUp;
         UIImage *imageToCrop = [UIImage imageWithCGImage:[representation fullResolutionImage]
-                                          scale:[representation scale]
-                                    orientation:UIImageOrientationUp];
+                                                   scale:[representation scale]
+                                             orientation:orientation];
         
         SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:imageToCrop cropSize:_cropSize delegate:self];
         [picker pushViewController:cropViewController animated:YES];
