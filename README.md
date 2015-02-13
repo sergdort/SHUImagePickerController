@@ -2,6 +2,11 @@
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/SHUImagePickerController/badge.png)](http://cocoadocs.org/docsets/SHUImagePickerController)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/SHUImagePickerController/badge.png)](http://cocoadocs.org/docsets/SHUImagePickerController)
+## iPhone
+![image](http://i.imgur.com/7eqRDGa.png)
+
+## iPad
+![image](http://i.imgur.com/TGbLPKJ.png)
 
 ## Usage
 
