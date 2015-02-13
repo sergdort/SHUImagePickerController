@@ -15,6 +15,8 @@
 @property (weak, nonatomic)   IBOutlet UIImageView        *imageView;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *contectViewWidthConstraint;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (unsafe_unretained, nonatomic) IBOutlet NSLayoutConstraint *contentViewTopConstraint;
+
 @property (weak, nonatomic)   IBOutlet UIView             *contentView;
 
 @property (strong, nonatomic)          UIImage            *imageToCrop;
@@ -146,6 +148,7 @@
     CGSize imageSize = [self _contentSizeForImage:self.imageToCrop];
     self.contectViewWidthConstraint.constant = imageSize.width;
     self.contentViewHeightConstraint.constant = imageSize.height;
+    self.contentViewTopConstraint.constant -= [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? 44 : 0;
     SHUCropView *cropView = [[SHUCropView alloc] initWithFrame:[self.view bounds] cropSize:self.cropSize];
     [self.view addSubview:cropView];
 }
