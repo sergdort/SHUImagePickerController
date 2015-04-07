@@ -128,44 +128,21 @@
     }
 }
 
-- (void) _performDrillInWithPhotoUrl:(NSURL *)photoUrl pickerController:(UIImagePickerController *)picker {
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:photoUrl resultBlock:^(ALAsset *asset) {
-        
-        ALAssetRepresentation *representation = [asset defaultRepresentation];
-        NSNumber *orientationValue = [asset valueForProperty:ALAssetPropertyOrientation];
-        UIImageOrientation orientation = orientationValue ? [orientationValue integerValue] : UIImageOrientationUp;
-        UIImage *imageToCrop = [UIImage imageWithCGImage:[representation fullResolutionImage]
-                                                   scale:[representation scale]
-                                             orientation:orientation];
-        
-        SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:imageToCrop cropSize:_cropSize delegate:self];
-        [picker pushViewController:cropViewController animated:YES];
-        
-    } failureBlock:^(NSError *error) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles: nil];
-        [alertView show];
-        
-    }];
-}
-
 - (void) _performDrillInWithPhoto:(UIImage *)photo pickerController:(UIImagePickerController *)picker {
-    SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:nil bundle:nil imageToCrop:photo cropSize:_cropSize delegate:self];
+    SHUCropImageController *cropViewController = [[SHUCropImageController alloc] initWithNibName:@"SHUCropImageController"
+                                                                                          bundle:[NSBundle bundleForClass:[SHUCropImageController class]]
+                                                                                     imageToCrop:photo
+                                                                                        cropSize:_cropSize
+                                                                                        delegate:self];
+    [picker setNavigationBarHidden:NO animated:YES];
     [picker pushViewController:cropViewController animated:YES];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-        [self _performDrillInWithPhoto:originalImage pickerController:picker];
-    } else {
-        NSURL *imageUrl = info[UIImagePickerControllerReferenceURL];
-        [self _performDrillInWithPhotoUrl:imageUrl pickerController:picker];
-    }
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    [self _performDrillInWithPhoto:originalImage pickerController:picker];
 }
 
 #pragma mark - SHUCropImageControllerDelegate

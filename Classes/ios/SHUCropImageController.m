@@ -228,7 +228,7 @@
 
 - (void) doneButtonPressed:(id)sender{
     [self _cropImage];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
