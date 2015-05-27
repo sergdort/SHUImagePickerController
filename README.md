@@ -20,6 +20,10 @@ SHUImagePickerController is available through [CocoaPods](http://cocoapods.org),
 it simply add the following line to your Podfile:
 
     pod "SHUImagePickerController"
+    
+    or
+    pod 'SHUImagePickerController', :git => 'https://github.com/sergdort/SHUImagePickerController.git', :branch => 'master'
+    to have latest changes
 
 ## Author
 
