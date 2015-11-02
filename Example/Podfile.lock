@@ -1,5 +1,7 @@
 PODS:
-  - SHUImagePickerController (0.1.0)
+  - Masonry (0.6.3)
+  - SHUImagePickerController (0.1.0):
+    - Masonry
 
 DEPENDENCIES:
   - SHUImagePickerController (from `../SHUImagePickerController.podspec`)
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :path: ../SHUImagePickerController.podspec
 
 SPEC CHECKSUMS:
-  SHUImagePickerController: 1de1155e000111e540de61bdbe3f675b4a3a81b3
+  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+  SHUImagePickerController: 4182485c7eb046479f97769fc70dde1905cbcfb6
 
-COCOAPODS: 0.36.0.rc.1
+COCOAPODS: 0.39.0

@@ -9,4 +9,4 @@ use_frameworks!
 #For local development use:
 pod "SHUImagePickerController", :path => "../SHUImagePickerController.podspec"
 
-link_with ['SHUImagePickerControllerExample', 'SHUImagePickerControllerExampleTests']
+link_with ['SHUImagePickerController']

@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Classes/**/*.{h,m}'
   s.resources = 'Resources/*'
-
+  s.dependency "Masonry"
   s.frameworks = 'CoreGraphics', 'UIKit', 'AssetsLibrary'
 
 end
