@@ -35,7 +35,7 @@ it simply add the following line to your Podfile:
 
 ## Author
 
-Sergey Shulga, sergdor@gmail.com
+Sergey Shulga, sergdort@gmail.com
 
 ## License
 
