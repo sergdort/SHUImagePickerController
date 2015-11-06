@@ -10,6 +10,8 @@
 #import "SHUCropView.h"
 #import "Masonry.h"
 
+#define IS_IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+
 @interface SHUCropImageController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic)   IBOutlet UIScrollView       *scrollView;
@@ -53,9 +55,14 @@
 - (void) viewWillAppear:(BOOL)animated{
    [super viewWillAppear:animated];
    
+//   self.edgesForExtendedLayout = IS_IPAD ? UIRectEdgeNone : UIRectEdgeAll;
    [self _configView];
    [self _configScrollViewZoom];
    [self _configScrollViewInsets];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+   NSLog(@"%@", NSStringFromCGRect(self.view.bounds));
 }
 
 #pragma mark - Private
@@ -163,18 +170,23 @@
 }
 
 - (void) _configScrollViewInsets {
-   BOOL isIPad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-   
    CGFloat topInset, bottomInset, leftInset, rightInset;
-   CGSize screenSize = [UIScreen mainScreen].bounds.size;
    
-   bottomInset = (screenSize.height - self.cropSize.height) / 2.f;
-   topInset = isIPad ? bottomInset : bottomInset - (navigationBarHeight + statusBarHeight);
-   leftInset = (screenSize.width - self.cropSize.width) / 2.f ;
-   rightInset = leftInset;
-   
+   if (IS_IPAD) {
+      CGSize screenSize = self.view.bounds.size;
+      bottomInset = (screenSize.height - self.cropSize.height) / 2.f;
+      topInset = bottomInset;
+      leftInset = (screenSize.width - self.cropSize.width) / 2.f ;
+      rightInset = leftInset;
+   } else {
+      CGSize screenSize = [UIScreen mainScreen].bounds.size;
+      bottomInset = (screenSize.height - self.cropSize.height) / 2.f;
+      topInset = bottomInset - (navigationBarHeight + statusBarHeight);
+      leftInset = (screenSize.width - self.cropSize.width) / 2.f ;
+      rightInset = leftInset;
+   }
    self.scrollView.contentInset = UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset);
 }
 
